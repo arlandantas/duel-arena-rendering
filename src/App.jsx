@@ -1,11 +1,14 @@
 import { useState } from 'react';
 import './App.css';
 import Bot from './Bot';
+import useUserInterfaceHook from './hooks/useUserInterfaceHook';
 
 function App() {
   const speed = 10;
   const angle_speed = 30;
   let [bot_position, setBot] = useState({ x: 0, y: 0, bot_angle: 0, gun_angle: 0 });
+
+  useUserInterfaceHook();
 
   function toRad(angle) {
     return Math.PI * angle / 180;
