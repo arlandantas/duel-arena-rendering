@@ -30,7 +30,7 @@ function App() {
     };
   }, []);
 
-  useUserInterfaceHook();
+  useUserInterfaceHook(world, vehicle_id);
 
   return (
     <div className="App">
@@ -43,8 +43,8 @@ function App() {
       >
         { world.getVehicles().map((v, k) => (<Vehicle key={`vehicle_${k}`} vehicle={v}></Vehicle>)) }
       </svg>
-      <div>
-        Data: { JSON.stringify(world.getVehicle(vehicle_id)) }
+      <div style={{ width: '400px', overflow: 'auto' }}>
+        Data: { JSON.stringify(world.getVehicle(vehicle_id), null, 2) }
       </div>
       <div>
         Bot
