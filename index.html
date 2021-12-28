@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Arena de Duelo</title>
+</head>
+<body>
+  <svg path="http://www.w3.org/2000/svg" id="arena" width="500" height="500" viewbox="0 0 500 500">
+    <rect width="50" height="50" fill="black" x="10" y="10"></rect>
+  </svg>
+  <script>
+    const svg_arena = document.querySelector("svg#arena");
+    const rect = createSVGElement('rect', {
+      width: 50,
+      height: 50,
+      x: 10,
+      y: 50,
+      fill: 'blue'
+    });
+
+    window.onload = () => {
+      svg_arena.append(rect);
+      // setInterval(() => {
+      //   rect.setAttribute('x', parseInt(rect.getAttribute("x")) + 10)
+      // }, 500)
+    }
+
+    function createSVGElement(tag, attributes) {
+      let elmt = document.createElementNS('http://www.w3.org/2000/svg', tag);
+      for (let attr of Object.entries(attributes)) {
+        elmt.setAttribute(attr[0], attr[1])
+      }
+      return elmt;
+    }
+  </script>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+    }
+    svg {
+      border: 1px solid red;
+    }
+  </style>
+</body>
+</html>
