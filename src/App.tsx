@@ -1,18 +1,20 @@
 import { useMemo } from 'react';
 import './App.css';
 import useUserInterfaceHook from './hooks/useUserInterfaceHook';
-import { World, Vehicle } from 'duel-arena-engine';
+import { World, Vehicle as ModelVehicle } from 'duel-arena-engine';
 import React from 'react';
+import Vehicle from './objects/Vehicle';
 
 function App() {
   const world = useMemo( () => {
     const world = new World();
-    const vehicle = new Vehicle(250, 250, 0);
-    world.addVehicle(vehicle);
+    world.addVehicle(new ModelVehicle(250, 250, 0));
+    world.addVehicle(new ModelVehicle(50, 50, 0));
+    world.addVehicle(new ModelVehicle(10, 10, 0));
+    world.addVehicle(new ModelVehicle(50, 350, 0));
+    world.addVehicle(new ModelVehicle(250, 50, 0));
     return world;
   }, []);
-
-  console.log(world);
 
   useUserInterfaceHook();
 
@@ -25,6 +27,7 @@ function App() {
         viewBox='0 0 500 500'
         style={{ border: '1px solid red' }}               
       >
+        { world.getVehicles().map(v => (<Vehicle vehicle={v}></Vehicle>)) }
       </svg>
       <div>
         Bot

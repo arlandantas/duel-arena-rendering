@@ -1,9 +1,9 @@
 {
   "compilerOptions": {
-      "target": "es6",
+      "target": "es2017",
       "module": "commonjs",
       "moduleResolution": "node",
-      "jsx": "react",
+      "jsx": "react-jsx",
       "esModuleInterop": true,
       "outDir": "dist",
       "sourceMap": true,
