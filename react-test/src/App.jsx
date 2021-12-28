@@ -11,7 +11,7 @@ function App() {
     return Math.PI * angle / 180;
   }
 
-  function formward() {
+  function forward() {
     let angle = toRad(bot_position.bot_angle + 90);
     setBot((state) => ({
       ...state,
@@ -20,7 +20,7 @@ function App() {
     }));
   }
 
-  function reward() {
+  function backward() {
     let angle = toRad(bot_position.bot_angle + 90);
     setBot((state) => ({
       ...state,
@@ -48,8 +48,8 @@ function App() {
         <button onClick={() => setBot((state) => ({ ...state, y: state.y - speed }))}>⬆</button>
         <button onClick={() => setBot((state) => ({ ...state, bot_angle: state.bot_angle - angle_speed }))}>↶</button>
         <button onClick={() => setBot((state) => ({ ...state, bot_angle: state.bot_angle + angle_speed }))}>↷</button>
-        <button onClick={formward}>✅</button>
-        <button onClick={reward}>⛔</button>
+        <button onClick={forward}>✅</button>
+        <button onClick={backward}>⛔</button>
       </div>
       <div>
         Gun
