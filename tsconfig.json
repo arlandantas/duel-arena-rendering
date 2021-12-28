@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+      "target": "es6",
+      "module": "commonjs",
+      "moduleResolution": "node",
+      "jsx": "react",
+      "esModuleInterop": true,
+      "outDir": "dist",
+      "sourceMap": true,
+      "baseUrl": "."
+  },
+  "include": ["src/**/*.ts", "node_modules/duel-arena-engine/*.ts", "src/index.tsx"],
+  "exclude": ["node_modules"]
+}

@@ -1,7 +1,7 @@
 import { useEffect, useCallback } from "react";
 
 
-function useUserInterfaceHook() {
+function useUserInterfaceHook(): void {
 	
 	const sendCommandToEngine = useCallback((pressedKey: string): void => {
 		console.log(pressedKey);
