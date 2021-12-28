@@ -3,7 +3,31 @@ import './App.css';
 import Bot from './Bot';
 
 function App() {
-  let [bot_position, setBot] = useState({ x: 0, y: 0, bot_angle: 90, gun_angle: 0 });
+  const speed = 10;
+  const angle_speed = 30;
+  let [bot_position, setBot] = useState({ x: 0, y: 0, bot_angle: 0, gun_angle: 0 });
+
+  function toRad(angle) {
+    return Math.PI * angle / 180;
+  }
+
+  function formward() {
+    let angle = toRad(bot_position.bot_angle + 90);
+    setBot((state) => ({
+      ...state,
+      y: state.y + (Math.sin(angle) * speed),
+      x: state.x + (Math.cos(angle) * speed),
+    }));
+  }
+
+  function reward() {
+    let angle = toRad(bot_position.bot_angle + 90);
+    setBot((state) => ({
+      ...state,
+      y: state.y + (Math.sin(angle) * (-1 * speed)),
+      x: state.x + (Math.cos(angle) * (-1 * speed)),
+    }));
+  }
 
   return (
     <div className="App">
@@ -18,17 +42,22 @@ function App() {
       </svg>
       <div>
         Bot
-        <button onClick={() => setBot((state) => ({ ...state, x: state.x - 5 }))}>⬅</button>
-        <button onClick={() => setBot((state) => ({ ...state, x: state.x + 5 }))}>➡</button>
-        <button onClick={() => setBot((state) => ({ ...state, y: state.y + 5 }))}>⬇</button>
-        <button onClick={() => setBot((state) => ({ ...state, y: state.y - 5 }))}>⬆</button>
-        <button onClick={() => setBot((state) => ({ ...state, bot_angle: state.bot_angle - 20 }))}>↶</button>
-        <button onClick={() => setBot((state) => ({ ...state, bot_angle: state.bot_angle + 20 }))}>↷</button>
+        <button onClick={() => setBot((state) => ({ ...state, x: state.x - speed }))}>⬅</button>
+        <button onClick={() => setBot((state) => ({ ...state, x: state.x + speed }))}>➡</button>
+        <button onClick={() => setBot((state) => ({ ...state, y: state.y + speed }))}>⬇</button>
+        <button onClick={() => setBot((state) => ({ ...state, y: state.y - speed }))}>⬆</button>
+        <button onClick={() => setBot((state) => ({ ...state, bot_angle: state.bot_angle - angle_speed }))}>↶</button>
+        <button onClick={() => setBot((state) => ({ ...state, bot_angle: state.bot_angle + angle_speed }))}>↷</button>
+        <button onClick={formward}>✅</button>
+        <button onClick={reward}>⛔</button>
       </div>
       <div>
         Gun
-        <button onClick={() => setBot((state) => ({ ...state, gun_angle: state.gun_angle - 20 }))}>↶</button>
-        <button onClick={() => setBot((state) => ({ ...state, gun_angle: state.gun_angle + 20 }))}>↷</button>
+        <button onClick={() => setBot((state) => ({ ...state, gun_angle: state.gun_angle - angle_speed }))}>↶</button>
+        <button onClick={() => setBot((state) => ({ ...state, gun_angle: state.gun_angle + angle_speed }))}>↷</button>
+      </div>
+      <div>
+        Data: { JSON.stringify(bot_position) }
       </div>
     </div>
   );
