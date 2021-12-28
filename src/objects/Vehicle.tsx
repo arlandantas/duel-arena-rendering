@@ -16,7 +16,7 @@ function Vehicle (props: Props) {
 
   return (
     <g
-      transform={`rotate(${props.vehicle.getAngle()}, ${props.vehicle.getX() + (width/2)}, ${props.vehicle.getY() + (height/2)})`}
+      transform={`rotate(${props.vehicle.getAngle()-90}, ${props.vehicle.getX() + (width/2)}, ${props.vehicle.getY() + (height/2)})`}
     >
       <rect
         x={props.vehicle.getX() ?? 10}

@@ -1,19 +1,33 @@
-import { useMemo } from 'react';
+import { useMemo, useReducer, useEffect } from 'react';
 import './App.css';
 import useUserInterfaceHook from './hooks/useUserInterfaceHook';
 import { World, Vehicle as ModelVehicle } from 'duel-arena-engine';
-import React from 'react';
 import Vehicle from './objects/Vehicle';
 
 function App() {
-  const world = useMemo( () => {
+  const [world, vehicle_id] = useMemo(() => {
     const world = new World();
-    world.addVehicle(new ModelVehicle(250, 250, 0));
-    world.addVehicle(new ModelVehicle(50, 50, 0));
-    world.addVehicle(new ModelVehicle(10, 10, 0));
-    world.addVehicle(new ModelVehicle(50, 350, 0));
-    world.addVehicle(new ModelVehicle(250, 50, 0));
-    return world;
+
+    const vehicle = new ModelVehicle(250, 250, 0);
+    vehicle.setSpeed(10);
+    vehicle.setAngleSpeed(30);
+    vehicle.setGunAngleSpeed(30);
+
+    const vehicle_id = world.addVehicle(vehicle);
+
+    return [ world, vehicle_id ];
+  }, []);
+
+  const [, forceUpdate] = useReducer(x => x+1, 0);
+
+  useEffect(function () {
+    const fpsInterval = setInterval(() => {
+      forceUpdate();
+    }, 1000/60);
+
+    return () => {
+      clearInterval(fpsInterval);
+    };
   }, []);
 
   useUserInterfaceHook();
@@ -27,23 +41,34 @@ function App() {
         viewBox='0 0 500 500'
         style={{ border: '1px solid red' }}               
       >
-        { world.getVehicles().map(v => (<Vehicle vehicle={v}></Vehicle>)) }
+        { world.getVehicles().map((v, k) => (<Vehicle key={`vehicle_${k}`} vehicle={v}></Vehicle>)) }
       </svg>
       <div>
+        Data: { JSON.stringify(world.getVehicle(vehicle_id)) }
+      </div>
+      <div>
         Bot
-        <button>⬅</button>
-        <button>➡</button>
-        <button>⬇</button>
-        <button>⬆</button>
-        <button>↶</button>
-        <button>↷</button>
-        <button>✅</button>
-        <button>⛔</button>
+        <button onClick={() => {
+          world.getVehicle(vehicle_id).move()
+        }}>✅</button>
+        <button onClick={() => {
+          world.getVehicle(vehicle_id).move(ModelVehicle.DIRECTIONS.BACKWARD)
+        }}>⛔</button>
+        <button onClick={() => {
+          world.getVehicle(vehicle_id).rotate(ModelVehicle.DIRECTIONS.ANTICLOCKWISE)}
+        }>↶</button>
+        <button onClick={() => {
+          world.getVehicle(vehicle_id).rotate()
+        }}>↷</button>
       </div>
       <div>
         Gun
-        <button>↶</button>
-        <button>↷</button>
+        <button onClick={() => {
+          world.getVehicle(vehicle_id).rotateGun(ModelVehicle.DIRECTIONS.ANTICLOCKWISE)
+        }}>↶</button>
+        <button onClick={() => {
+          world.getVehicle(vehicle_id).rotateGun()
+        }}>↷</button>
       </div>
     </div>
   );
