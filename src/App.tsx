@@ -1,7 +1,7 @@
 import { useMemo, useReducer, useEffect } from 'react';
 import './App.css';
 import useUserInterfaceHook from './hooks/useUserInterfaceHook';
-import { World, Vehicle as ModelVehicle, VehicleController } from 'duel-arena-engine';
+import { World, Vehicle as ModelVehicle, VehicleController, AIVehicleController } from 'duel-arena-engine';
 import Vehicle from './objects/Vehicle';
 
 function App() {
@@ -9,14 +9,24 @@ function App() {
     const world = new World();
 
     const vehicle = new ModelVehicle(250, 250, 0);
-    vehicle.setSpeed(10);
-    vehicle.setAngleSpeed(30);
-    vehicle.setGunAngleSpeed(30);
-
     const vehicle_id = world.addVehicle(vehicle);
-
     const vehicle_controller = new VehicleController(vehicle_id);
     world.addVehicleController(vehicle_controller);
+
+    const ai_vehicle = new ModelVehicle(50, 50, 0);
+    const ai_vehicle_id = world.addVehicle(ai_vehicle);
+    const ai_vehicle_controller = new AIVehicleController(ai_vehicle_id, `
+    let variavel = 10;
+    
+    function setup() {
+      console.log("setting up the artificial inteligence: ", variavel);
+    }
+    
+    function loop() {
+      console.log("looping at the artificial inteligence!");
+    }
+    `);
+    world.addVehicleController(ai_vehicle_controller);
 
     world.startUpdates();
 
