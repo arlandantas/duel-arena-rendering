@@ -1,11 +1,11 @@
 import { useMemo, useReducer, useEffect } from 'react';
 import './App.css';
 import useUserInterfaceHook from './hooks/useUserInterfaceHook';
-import { World, Vehicle as ModelVehicle } from 'duel-arena-engine';
+import { World, Vehicle as ModelVehicle, VehicleController } from 'duel-arena-engine';
 import Vehicle from './objects/Vehicle';
 
 function App() {
-  const [world, vehicle_id] = useMemo(() => {
+  const [world, vehicle_id, vehicle_controller] = useMemo(() => {
     const world = new World();
 
     const vehicle = new ModelVehicle(250, 250, 0);
@@ -15,7 +15,12 @@ function App() {
 
     const vehicle_id = world.addVehicle(vehicle);
 
-    return [ world, vehicle_id ];
+    const vehicle_controller = new VehicleController(vehicle_id);
+    world.addVehicleController(vehicle_controller);
+
+    world.startUpdates();
+
+    return [ world, vehicle_id, vehicle_controller ];
   }, []);
 
   const [, forceUpdate] = useReducer(x => x+1, 0);
@@ -30,7 +35,7 @@ function App() {
     };
   }, []);
 
-  useUserInterfaceHook(world, vehicle_id);
+  useUserInterfaceHook(vehicle_controller);
 
   return (
     <div className="App">
@@ -45,30 +50,6 @@ function App() {
       </svg>
       <div style={{ width: '400px', overflow: 'auto' }}>
         Data: { JSON.stringify(world.getVehicle(vehicle_id), null, 2) }
-      </div>
-      <div>
-        Bot
-        <button onClick={() => {
-          world.getVehicle(vehicle_id).move()
-        }}>✅</button>
-        <button onClick={() => {
-          world.getVehicle(vehicle_id).move(ModelVehicle.DIRECTIONS.BACKWARD)
-        }}>⛔</button>
-        <button onClick={() => {
-          world.getVehicle(vehicle_id).rotate(ModelVehicle.DIRECTIONS.ANTICLOCKWISE)}
-        }>↶</button>
-        <button onClick={() => {
-          world.getVehicle(vehicle_id).rotate()
-        }}>↷</button>
-      </div>
-      <div>
-        Gun
-        <button onClick={() => {
-          world.getVehicle(vehicle_id).rotateGun(ModelVehicle.DIRECTIONS.ANTICLOCKWISE)
-        }}>↶</button>
-        <button onClick={() => {
-          world.getVehicle(vehicle_id).rotateGun()
-        }}>↷</button>
       </div>
     </div>
   );
