@@ -5,7 +5,7 @@ import { World, Vehicle as ModelVehicle, VehicleController, AIVehicleController 
 import Vehicle from './objects/Vehicle';
 
 function App() {
-  const [world, vehicle_id, vehicle_controller] = useMemo(() => {
+  const [world, vehicle_controller] = useMemo(() => {
     const world = new World();
 
     const vehicle = new ModelVehicle(250, 250, 0);
@@ -16,21 +16,33 @@ function App() {
     const ai_vehicle = new ModelVehicle(50, 50, 0);
     const ai_vehicle_id = world.addVehicle(ai_vehicle);
     const ai_vehicle_controller = new AIVehicleController(ai_vehicle_id, `
-    let variavel = 10;
-    
+    let loop_count = 0;
+
     function setup() {
-      console.log("setting up the artificial inteligence: ", variavel);
+      console.log("setting up the artificial inteligence: ");
     }
     
     function loop() {
-      console.log("looping at the artificial inteligence!");
+      if (loop_count % 2 == 0) {
+        ++loop_count;
+        return;
+      }
+      if (loop_count <= 20) {
+        move();
+      }
+      else {
+        rotateClockwise();
+        rotateGunAnticlockwise();
+      }
+      ++loop_count;
+      if (loop_count >= 26) loop_count = 0;
     }
     `);
     world.addVehicleController(ai_vehicle_controller);
 
     world.startUpdates();
 
-    return [ world, vehicle_id, vehicle_controller ];
+    return [ world, vehicle_controller ];
   }, []);
 
   const [, forceUpdate] = useReducer(x => x+1, 0);
@@ -59,7 +71,7 @@ function App() {
         { world.getVehicles().map((v, k) => (<Vehicle key={`vehicle_${k}`} vehicle={v}></Vehicle>)) }
       </svg>
       <div style={{ width: '400px', overflow: 'auto' }}>
-        Data: { JSON.stringify(world.getVehicle(vehicle_id), null, 2) }
+        Data: { JSON.stringify(world, null, 2) }
       </div>
     </div>
   );
