@@ -1,4 +1,4 @@
-import ModelVehicle from "duel-arena-engine/models/Vehicle";
+import { Vehicle as ModelVehicle } from "duel-arena-engine";
 import Boundaries from './Boundaries';
 
 type Props = {
@@ -6,8 +6,8 @@ type Props = {
 };
 
 function Vehicle (props: Props) {
-  const width = 40;
-  const height = 40;
+  const width = ModelVehicle.SIZE.WIDTH;
+  const height = ModelVehicle.SIZE.HEIGHT;
 
   const colors = {
     wheel: 'black',
