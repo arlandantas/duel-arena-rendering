@@ -3,6 +3,7 @@ import './App.css';
 import useUserInterfaceHook from './hooks/useUserInterfaceHook';
 import { World, Vehicle as ModelVehicle, VehicleController, AIVehicleController } from 'duel-arena-engine';
 import Vehicle from './objects/Vehicle';
+import Bullet from './objects/Bullet';
 
 function App() {
   const [world, vehicle_controller] = useMemo(() => {
@@ -34,7 +35,7 @@ function App() {
         move();
       } else {
         rotateClockwise();
-        rotateGunAnticlockwise();
+        fire();
       }
       ++loop_count;
       if (loop_count >= 10) loop_count = 0;
@@ -70,7 +71,8 @@ function App() {
         viewBox='0 0 500 500'
         style={{ border: '1px solid red' }}               
       >
-        { world.getVehicles().map((v, k) => (<Vehicle key={`vehicle_${k}`} vehicle={v}></Vehicle>)) }
+        { world.getVehicles().map((v, k) => (<Vehicle key={`vehicle_${k}`} vehicle={v} />)) }
+        { world.getBullets().map((b, k) => (<Bullet key={`vehicle_${k}`} bullet={b} />)) }
       </svg>
       <div style={{ width: '400px', overflow: 'auto' }}>
         Data: { JSON.stringify(world, null, 2) }
