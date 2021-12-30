@@ -1,5 +1,4 @@
 import { Vehicle as ModelVehicle } from "duel-arena-engine";
-import Boundaries from './Boundaries';
 
 type Props = {
   vehicle: ModelVehicle
@@ -19,7 +18,7 @@ function Vehicle (props: Props) {
 
   return (
     <>
-      <Boundaries boundaries={props.vehicle.getBoundaries()}/>
+      {/* <Boundaries boundaries={props.vehicle.getBoundaries()}/> */}
       <g
         transform={`rotate(${props.vehicle.getAngle()-90}, ${position.x + (width/2)}, ${position.y + (height/2)})`}
       >

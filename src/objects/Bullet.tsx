@@ -1,5 +1,4 @@
 import { Bullet as ModelBullet } from "duel-arena-engine";
-import Boundaries from './Boundaries';
 
 type Props = {
   bullet: ModelBullet
@@ -24,7 +23,7 @@ function Vehicle (props: Props) {
           fill={colors.gun}
         ></circle>
       </g>
-      <Boundaries boundaries={props.bullet.getBoundaries()} />
+      {/* <Boundaries boundaries={props.bullet.getBoundaries()} /> */}
     </>
   );
 }
