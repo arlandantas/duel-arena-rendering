@@ -9,7 +9,7 @@ function App() {
   const [world, vehicle_controller] = useMemo(() => {
     const world = new World();
 
-    const vehicle = new ModelVehicle(250, 250, 0);
+    const vehicle = new ModelVehicle(250, 250, 30);
     const vehicle_id = world.addVehicle(vehicle);
     const vehicle_controller = new VehicleController(vehicle_id);
     world.addVehicleController(vehicle_controller);
