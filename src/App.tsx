@@ -35,7 +35,6 @@ function App() {
         move();
       } else {
         rotateClockwise();
-        fire();
       }
       ++loop_count;
       if (loop_count >= 10) loop_count = 0;
