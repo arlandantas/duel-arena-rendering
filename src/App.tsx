@@ -17,25 +17,27 @@ function App() {
     const ai_vehicle_id = world.addVehicle(ai_vehicle);
     const ai_vehicle_controller = new AIVehicleController(ai_vehicle_id, `
     let loop_count = 0;
+    let loop_delayer = 0;
 
     function setup() {
       console.log("setting up the artificial inteligence: ");
     }
     
     function loop() {
-      if (loop_count % 2 == 0) {
-        ++loop_count;
+      if (loop_delayer < 5) {
+        ++loop_delayer;
         return;
+      } else {
+        loop_delayer = 0;
       }
-      if (loop_count <= 20) {
+      if (loop_count <= 6) {
         move();
-      }
-      else {
+      } else {
         rotateClockwise();
         rotateGunAnticlockwise();
       }
       ++loop_count;
-      if (loop_count >= 26) loop_count = 0;
+      if (loop_count >= 10) loop_count = 0;
     }
     `);
     world.addVehicleController(ai_vehicle_controller);

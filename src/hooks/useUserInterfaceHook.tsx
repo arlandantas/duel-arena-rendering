@@ -24,6 +24,9 @@ function useUserInterfaceHook(vehicle_controller: VehicleController): void {
 			case 'ArrowRight':
 				vehicle_controller.rotateGunClockwise();
 				break;
+			case ' ':
+				vehicle_controller.fire();
+				break;
 			default:
 		}
 	}, [vehicle_controller]);
