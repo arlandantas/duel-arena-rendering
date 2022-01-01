@@ -9,7 +9,7 @@ function Boundaries (props: Props) {
     <path
       d={`M ${props.boundaries.map(p => `${p.x} ${p.y}`).join(" L ")} z`}
       stroke="red"
-      strokeWidth={3}
+      strokeWidth={1}
       fill="transparent"
     />
   );

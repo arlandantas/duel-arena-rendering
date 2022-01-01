@@ -1,12 +1,11 @@
 import { Bullet as ModelBullet } from "duel-arena-engine";
+// import Boundaries from './Boundaries';
 
 type Props = {
   bullet: ModelBullet
 };
 
 function Vehicle (props: Props) {
-  const radius = 4;
-
   const colors = {
     gun: 'green',
   };
@@ -17,8 +16,8 @@ function Vehicle (props: Props) {
     <>
       <g>
         <circle
-          cx={position.x + (radius/2)}
-          cy={position.y + (radius/2)}
+          cx={position.x}
+          cy={position.y}
           r={ModelBullet.RADIUS}
           fill={colors.gun}
         ></circle>
