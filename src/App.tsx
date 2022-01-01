@@ -4,10 +4,15 @@ import useUserInterfaceHook from './hooks/useUserInterfaceHook';
 import { World, Vehicle as ModelVehicle, VehicleController, AIVehicleController } from 'duel-arena-engine';
 import Vehicle from './objects/Vehicle';
 import Bullet from './objects/Bullet';
+import Boundaries from './objects/Boundaries';
 
 function App() {
   const [world, vehicle_controller] = useMemo(() => {
     const world = new World();
+
+    world.addHeartOnRandomPosition()
+    world.addHeartOnRandomPosition()
+    world.addHeartOnRandomPosition()
 
     const vehicle = new ModelVehicle(250, 250, 30);
     const vehicle_id = world.addVehicle(vehicle);
@@ -73,6 +78,11 @@ function App() {
       >
         { world.getVehicles().map((v, k) => (<Vehicle key={`vehicle_${k}`} vehicle={v} />)) }
         { world.getBullets().map((b, k) => (<Bullet key={`vehicle_${k}`} bullet={b} />)) }
+        { world.getHearts().map((h, k) => (<Boundaries
+          key={`heart_${k}`}
+          boundaries={h.getBoundaries()}
+          fill='red'
+        />)) }
       </svg>
       <div style={{ width: '400px', overflow: 'auto' }}>
         Data: { JSON.stringify(world, null, 2) }
