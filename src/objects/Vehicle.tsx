@@ -58,6 +58,14 @@ function Vehicle (props: Props) {
           fill={colors.gun}
         />
       </g>
+      <text
+        x={position.x}
+        y={position.y + height + 20}
+        fill="red"
+        style={{ fontSize: '8pt' }}
+      >
+        Life: {props.vehicle.getLife()}
+      </text>
     </>
   );
 }
