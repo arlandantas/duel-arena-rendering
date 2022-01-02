@@ -5,6 +5,7 @@ import { World, Vehicle as ModelVehicle, VehicleController, AIVehicleController 
 import Vehicle from './objects/Vehicle';
 import Bullet from './objects/Bullet';
 import Boundaries from './objects/Boundaries';
+import ia_code from './example_IAs/vehicle_direct_fire';
 
 function App() {
   const [world, vehicle_controller] = useMemo(() => {
@@ -21,31 +22,7 @@ function App() {
 
     const ai_vehicle = new ModelVehicle(50, 50, 0);
     const ai_vehicle_id = world.addVehicle(ai_vehicle);
-    const ai_vehicle_controller = new AIVehicleController(ai_vehicle_id, `
-    let loop_count = 0;
-    let loop_delayer = 0;
-
-    function setup() {
-      console.log("setting up the artificial inteligence: ");
-    }
-    
-    function loop() {
-      if (loop_delayer < 5) {
-        ++loop_delayer;
-        return;
-      } else {
-        loop_delayer = 0;
-      }
-      if (loop_count <= 6) {
-        move();
-      } else {
-        rotateClockwise();
-        fire()
-      }
-      ++loop_count;
-      if (loop_count >= 10) loop_count = 0;
-    }
-    `);
+    const ai_vehicle_controller = new AIVehicleController(ai_vehicle_id, ia_code);
     world.addVehicleController(ai_vehicle_controller);
 
     world.startUpdates();
@@ -85,7 +62,7 @@ function App() {
         />)) }
       </svg>
       <div style={{ width: '400px', overflow: 'auto' }}>
-        Data: { JSON.stringify(world, null, 2) }
+        Data:
       </div>
     </div>
   );
