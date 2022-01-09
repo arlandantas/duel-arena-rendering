@@ -53,6 +53,7 @@ function App() {
         viewBox={`0 0 ${world.getWidth()} ${world.getHeight()}`}
         id="world"
       >
+        <Boundaries boundaries={world.getBoundaries()} fill='transparent' strokeWidth={2} />
         { world.getVehicles().map((v, k) => (<Vehicle key={`vehicle_${k}`} vehicle={v} />)) }
         { world.getBullets().map((b, k) => (<Bullet key={`vehicle_${k}`} bullet={b} />)) }
         { world.getHearts().map((h, k) => (<Boundaries
