@@ -43,15 +43,15 @@ function App() {
   }, []);
 
   useUserInterfaceHook(vehicle_controller);
-
+  
   return (
-    <div className="App">
+    <div id="App">
       <svg
         path="http://www.w3.org/2000/svg"
         width={500}
         height={500}
         viewBox={`0 0 ${world.getWidth()} ${world.getHeight()}`}
-        style={{ border: '1px solid red' }}               
+        id="world"
       >
         { world.getVehicles().map((v, k) => (<Vehicle key={`vehicle_${k}`} vehicle={v} />)) }
         { world.getBullets().map((b, k) => (<Bullet key={`vehicle_${k}`} bullet={b} />)) }
@@ -61,9 +61,6 @@ function App() {
           fill='red'
         />)) }
       </svg>
-      <div style={{ width: '400px', overflow: 'auto' }}>
-        Data:
-      </div>
     </div>
   );
 }
