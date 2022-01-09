@@ -50,7 +50,7 @@ function App() {
         path="http://www.w3.org/2000/svg"
         width={500}
         height={500}
-        viewBox='0 0 500 500'
+        viewBox={`0 0 ${world.getWidth()} ${world.getHeight()}`}
         style={{ border: '1px solid red' }}               
       >
         { world.getVehicles().map((v, k) => (<Vehicle key={`vehicle_${k}`} vehicle={v} />)) }
