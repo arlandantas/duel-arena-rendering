@@ -17,3 +17,10 @@ svg#world {
   height: 100vh;
   max-width: 100vw;
 }
+
+#controllers {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}

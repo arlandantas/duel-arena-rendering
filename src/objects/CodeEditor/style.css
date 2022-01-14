@@ -1,0 +1,12 @@
+.CodeEditor {
+  border: 1px solid #555;
+  height: 50vh;
+  max-height: 400px;
+  overflow: auto;
+}
+
+.CodeEditor .TextAreaCodeEditor {
+  padding: 15px;
+  width: 100%;
+  font-family: ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace;
+}

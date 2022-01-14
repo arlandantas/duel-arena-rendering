@@ -1,17 +1,23 @@
-import { useMemo, useReducer, useEffect } from 'react';
+import {
+  useMemo,
+  useReducer,
+  useEffect,
+  useState
+} from 'react';
 import './App.css';
 import useUserInterfaceHook from './hooks/useUserInterfaceHook';
 import {
   World as ModelWorld,
   Vehicle as ModelVehicle,
   VehicleController,
-  AIVehicleController
+  AIVehicleController,
 } from 'duel-arena-engine';
-import { World } from './objects';
-import ia_code from './example_IAs/vehicle_direct_fire';
+import { World, CodeEditor } from './objects';
+
+const initial_ia_code = `function setup() {}\n\nfunction loop() {\n  move();\n}`;
 
 function App() {
-  const [world, vehicle_controller] = useMemo(() => {
+  const [ world, vehicle_controller, ai_vehicle_controller ] = useMemo(() => {
     const world = new ModelWorld();
 
     world.addHeartOnRandomPosition()
@@ -25,13 +31,13 @@ function App() {
 
     const ai_vehicle = new ModelVehicle(50, 50, 0);
     const ai_vehicle_id = world.addVehicle(ai_vehicle);
-    const ai_vehicle_controller = new AIVehicleController(ai_vehicle_id, ia_code);
+    const ai_vehicle_controller = new AIVehicleController(ai_vehicle_id, initial_ia_code);
     world.addVehicleController(ai_vehicle_controller);
 
-    world.startUpdates();
-
-    return [ world, vehicle_controller ];
+    return [ world, vehicle_controller, ai_vehicle_controller ];
   }, []);
+
+  const [ia_code, setIACode] = useState(initial_ia_code);
 
   const [, forceUpdate] = useReducer(x => x+1, 0);
 
@@ -45,6 +51,11 @@ function App() {
     };
   }, []);
 
+  function startClick() {
+    ai_vehicle_controller.setIAFunction(ia_code);
+    world.startUpdates();
+  }
+
   useUserInterfaceHook(vehicle_controller);
   
   return (
@@ -52,6 +63,17 @@ function App() {
       <World
         world={world}
       />
+
+      <div id="controllers">
+        IA Code:
+        <CodeEditor
+          code={ia_code}
+          setCode={setIACode}
+        />
+        <div>
+          <button onClick={startClick}>▶</button>
+        </div>
+      </div>
     </div>
   );
 }
