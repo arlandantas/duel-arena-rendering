@@ -37,7 +37,9 @@ function App() {
     return [ world, vehicle_controller, ai_vehicle_controller ];
   }, []);
 
-  const [ia_code, setIACode] = useState(initial_ia_code);
+  const [ia_code, setIACode] = useState<string>(initial_ia_code);
+
+  const [startedLoop, setStartedLoop] = useState<boolean>(false);
 
   const [, forceUpdate] = useReducer(x => x+1, 0);
 
@@ -52,8 +54,11 @@ function App() {
   }, []);
 
   function startClick() {
-    ai_vehicle_controller.setIAFunction(ia_code);
-    world.startUpdates();
+    if (!startedLoop) {
+      ai_vehicle_controller.setIAFunction(ia_code);
+      world.startUpdates();
+      setStartedLoop(true);
+    }
   }
 
   useUserInterfaceHook(vehicle_controller);
@@ -65,9 +70,10 @@ function App() {
       />
 
       <div id="game-details">
-        <h3 id="fps-counter">
-          {world.getFPSLastSecond()} fps 
-        </h3>
+        <div id="fps-counter">
+          <h3>{world.getFPSLastSecond()} fps </h3>
+          <p> {world.getBullets().length} bullets </p>
+        </div>
         <div id="controllers">
           IA Code:
           <CodeEditor
