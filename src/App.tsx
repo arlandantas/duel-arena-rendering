@@ -64,14 +64,19 @@ function App() {
         world={world}
       />
 
-      <div id="controllers">
-        IA Code:
-        <CodeEditor
-          code={ia_code}
-          setCode={setIACode}
-        />
-        <div>
-          <button onClick={startClick}>▶</button>
+      <div id="game-details">
+        <h3 id="fps-counter">
+          {world.getFPSLastSecond()} fps 
+        </h3>
+        <div id="controllers">
+          IA Code:
+          <CodeEditor
+            code={ia_code}
+            setCode={setIACode}
+          />
+          <div>
+            <button onClick={startClick}>▶</button>
+          </div>
         </div>
       </div>
     </div>

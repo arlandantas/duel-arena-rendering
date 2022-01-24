@@ -3,6 +3,17 @@ html, body {
   padding: 0;
 }
 
+#game-details {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  padding: 0.5rem;
+}
+
+#fps-counter {
+  text-align: right;
+}
+
 #App {
   display: flex;
   flex-direction: row;
