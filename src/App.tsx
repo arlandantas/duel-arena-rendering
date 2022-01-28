@@ -14,7 +14,7 @@ import {
 } from 'duel-arena-engine';
 import { World, CodeEditor } from './objects';
 
-const initial_ia_code = `function setup() {}\n\nfunction loop() {\n  move();\n}`;
+const initial_ia_code = window.localStorage.getItem('ia_code') || `function setup() {}\n\nfunction loop() {\n  move();\n}`;
 
 function App() {
   const [ world, vehicle_controller, ai_vehicle_controller ] = useMemo(() => {
@@ -54,10 +54,29 @@ function App() {
   }, []);
 
   function startClick() {
+    saveIACode();
+    ai_vehicle_controller.setIAFunction(ia_code);
     if (!startedLoop) {
-      ai_vehicle_controller.setIAFunction(ia_code);
       world.startUpdates();
       setStartedLoop(true);
+    }
+  }
+
+  function stopClick() {
+    if (startedLoop) {
+      world.stopUpdates();
+      setStartedLoop(false);
+    }
+  }
+
+  function refreshClick() {
+    saveIACode();
+    window.location.reload()
+  }
+
+  function saveIACode() {
+    if (ia_code) {
+      window.localStorage.setItem('ia_code', ia_code);
     }
   }
 
@@ -81,7 +100,9 @@ function App() {
             setCode={setIACode}
           />
           <div>
-            <button onClick={startClick}>▶</button>
+            <button onClick={startClick} title="RUN">▶</button>
+            <button onClick={stopClick} title="STOP">⏹</button>
+            <button onClick={refreshClick} title="RESTART">🔄</button>
           </div>
         </div>
       </div>
